@@ -1,6 +1,7 @@
-from pickle import FALSE
+import re
 import png
 import urllib.request
+from picross_generator.image_readers.FileNameFilter import filter_name
 from picross_generator.image_readers.ImageMatrixBuilder import ImageBuilder
 
 def read_image(file_path : str):
@@ -10,6 +11,7 @@ def read_image(file_path : str):
     file_name = file_name_tokens[len(file_name_tokens) - 1]
     file_name_extension_tokens = file_name.split('.')
     name = file_name_extension_tokens[len(file_name_extension_tokens) - 2]
+    name = filter_name(name)
 
     reader = png.Reader(file=urllib.request.urlopen(file_url))
     raw_image = reader.asRGBA()
